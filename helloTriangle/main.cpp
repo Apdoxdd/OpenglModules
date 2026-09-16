@@ -44,41 +44,6 @@ int main()
 	glfwSetFramebufferSizeCallback(window, updateView);
 	// end-initialize
 	
-	//start-vao
-	unsigned int VAO;
-	glGenVertexArrays(1, &VAO);
-
-	glBindVertexArray(VAO); // starts recodring the incoming configs
-	//end-vao
-
-
-	//start-input
-	float vertices[] = {
-		0.5f,  0.5f, 0.0f,  // top right
-     		0.5f, -0.5f, 0.0f,  // bottom right
-    		-0.5f, -0.5f, 0.0f,  // bottom left
-    		-0.5f,  0.5f, 0.0f
-	};	
-	unsigned int indices[] = {
-		0, 1, 3,
-		1, 2, 3
-	};
-	unsigned int VBO;
-	unsigned int EBO;
-
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
-	glEnableVertexAttribArray(0);
-
-	//end-input
 
 	//start-vertex shader compiling
 	unsigned int vertShader;
@@ -139,23 +104,68 @@ int main()
 		std::cout<<"ERROR::LINKING::PROGRAM::ERROR\n"<<infoLog;
 	}
 	
-	glUseProgram(shaderProgram);
 	glDeleteShader(vertShader);
 	glDeleteShader(fragShader);
 
 	//end-program shader
 	
+	//start-triangle setup
 	
+	float trigVert[] {
+		0.2f, 0.2f, 0.0f,
+		0.2f, 0.8f, 0.0f,
+		0.8f, 0.2f, 0.0f
+	};
+	unsigned int trigVAO, trigVBO;
+	glGenVertexArrays(1, &trigVAO);
+	glGenBuffers(1, &trigVBO);
 
+	glBindVertexArray(trigVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, trigVBO);
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(trigVert), trigVert, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	//end-triangle setup
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//start-rectangle setup 
 	
+	float recVert[] {
+		-0.2f, 0.2f, 0.0f, // top right corner
+		-0.8f, 0.2f, 0.0f, // top lef corner
+		-0.8f, -0.2f, 0.0f, // bottom left corner
+		-0.2f, -0.2f, 0.0f // bottom right corner
+	};
+
+	unsigned int recIndec []{
+		0, 1, 2,
+		2, 3, 0
+	};
+
+	unsigned int recVAO, recVBO, recEBO;
+	glGenVertexArrays(1, &recVAO);
+	glGenBuffers(1, &recVBO);
+	glGenBuffers(1, &recEBO);
+
+	glBindVertexArray(recVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, recVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, recEBO);
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(recVert), recVert, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(recIndec), recIndec, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
 
 
+	//end-rectangle setup
 
 	while(!glfwWindowShouldClose(window))
 	{
-	glfwSetFramebufferSizeCallback(window, updateView);
+		glfwSetFramebufferSizeCallback(window, updateView);
 		//input
-	
+
 		processInput(window);
 
 
@@ -163,10 +173,16 @@ int main()
 		glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		glUseProgram(shaderProgram);
-		glBindVertexArray(VAO);
 
-		//glDrawArrays(GL_TRIANGLES, 0, 6);
+		//start render trig
+		glBindVertexArray(trigVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+		//end render trig
+		///////////////////////////////
+		///start render rec
+		glBindVertexArray(recVAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		//end render rec
 		//swap buffers and pull events
 
 		glfwSwapBuffers(window);
