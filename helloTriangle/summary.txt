@@ -1,0 +1,30 @@
+1) create a buffer
+2) give it an id
+3) bind it to a buffer obj or type 
+4) copy the user data in that bufferr
+5) write the vert shader specifiying that the input comes from outside with keyword in
+6) save vert shader source as const char* or read it from file
+7) create a GL shader obj and save its id to uint var
+8) attach the shader source to the shader obj
+9) compile the shader obj
+10) write the frag shader 
+11) save the source as const char* or read it from file
+12) create a shader obj of type frag and assign its id to uinit var
+13) bind the shader source to the id 
+14) compile the code
+15) create uint to hold shader program id
+16) link both shaders to shader program
+17) enable the shader program with glUseProgram so all subsequent render calls use it
+18) delete the shader objects (vertex and fragments) as we no longer need them after linking to program.
+19) tell how openGL should interpet the data using glVertixAttribPointer ( make sure first parameter matches whatever you used in the vertex shader)
+20) enable the location 0 if you used it 
+21) to save the blue print that use for buffer ( single buffer per object you wanna draw ) get a unit to save id for VAO 
+22) start recording the current object with glBindVertexArray()
+23) calling bind again in rendering loop allows us to use all configs saved for that one vao ( one object)
+24) to draw vertices of VBO in a certain order instead of sequentially, set up an EBO and copy the indices order in it the ebo, setting up is like vbo ( bind + copy data) and both are done after setting up VAO
+25) use glDrawElements instead of glDrawArrays then
+
+ 
+
+
+
