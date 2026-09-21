@@ -163,7 +163,7 @@ glEnableVertexAttribArray(0);
 
 		float air = std::sin(time);
 		airShader.use();
-		airShader.setFloat("air", air);
+		airShader.setFloat("air", time);
 		glBindVertexArray(airVAO);
 
 		glLineWidth(5.0f);

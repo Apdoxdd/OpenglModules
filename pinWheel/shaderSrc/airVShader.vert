@@ -5,5 +5,11 @@ uniform float air;
 
 void main()
 {
-	gl_Position = vec4(aPos, 1.0) + vec4(air, air, 0 , 0);
+	vec3 pos = aPos;
+	pos.x += air;
+	pos.y += air;
+
+	pos.x = mod(pos.x + 1.0 , 2.0) - 1.0;
+	pos.y = mod(pos.y + 1.0 , 2.0) - 1.0;
+	gl_Position = vec4(pos, 1.0);
 }
