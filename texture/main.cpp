@@ -78,7 +78,7 @@ int main()
 
 	if(data)
 	{
-		glTexImage2D(GL_TEXTURE, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
@@ -121,6 +121,9 @@ int main()
 	glEnableVertexAttribArray(2);
 
 	shader contShader {"../shaderSrc/contVShader.vert", "../shaderSrc/contFShader.frag"};
+	contShader.use();
+	contShader.setInt("texture", 0);
+	contShader.setInt("texture2", 1);
 	while(!glfwWindowShouldClose(window))
 	{
 		//input
@@ -131,10 +134,11 @@ int main()
 		
 		glBindVertexArray(contVAO);
 
-		contShader.use();
 		
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, texture2);
 		glBindVertexArray(contVAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
