@@ -47,13 +47,14 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+	stbi_set_flip_vertically_on_load(true); 
 
 	int width, height, nrChannels;
 	unsigned char *data = stbi_load("../assets/container.jpg", &width, &height, &nrChannels, 0);
 
 	if (data)
 	{	
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else 
@@ -76,16 +77,16 @@ int main()
 	int width2, height2, nrChannels2;
 	unsigned char *data2 = stbi_load("../assets/awesomeface.png", &width2, &height2, &nrChannels2, 0);
 
-	if(data)
+	if(data2)
 	{
-		glTexImage2D(GL_TEXTURE, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width2, height2, 0, GL_RGBA, GL_UNSIGNED_BYTE, data2);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
 	{
 		std::cout<<"failed to load smiley texture"<<std::endl;
 	}
-	stbi_image_free(data);
+	stbi_image_free(data2);
 	
 	///////////////////////////////////////////////////////////////////////////////////////////
 	//start-container wall data
@@ -122,7 +123,7 @@ int main()
 
 	shader contShader {"../shaderSrc/contVShader.vert", "../shaderSrc/contFShader.frag"};
 	contShader.use();
-	contShader.setInt("texture", 0);
+	contShader.setInt("texture1", 0);
 	contShader.setInt("texture2", 1);
 	while(!glfwWindowShouldClose(window))
 	{
