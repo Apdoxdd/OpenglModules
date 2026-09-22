@@ -173,6 +173,7 @@ glEnableVertexAttribArray(0);
 		glDrawArrays(GL_LINES, 0, 6); // 3 lines × 2 verts each
 		glBindVertexArray(whVAO);
 		flipShader.use();
+		flipShader.setFloat("air", time);
 		glDrawElements(GL_TRIANGLES, 15, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
