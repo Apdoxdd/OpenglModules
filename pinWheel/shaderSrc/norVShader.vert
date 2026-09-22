@@ -11,7 +11,8 @@ void main()
 {
 	float newAngle = radians(72) * aIndex + angle;
 	float newX = aPos.x * cos(newAngle) - aPos.y * sin(newAngle);
-	float newY = aPos.y * sin(newAngle) + aPos.y * cos(newAngle);
-	gl_Position = vec4(-newX, newY, aPos.z, 1);
+	float newY = aPos.x * sin(newAngle) + aPos.y * cos(newAngle);
+	gl_Position = vec4(newX, newY, aPos.z, 1);
 	ourColor = aColor;
 }
+

@@ -142,6 +142,7 @@ glEnableVertexAttribArray(0);
 
 	shader airShader {"../shaderSrc/airVShader.vert", "../shaderSrc/airFShader.frag"};
 	shader flipShader {"../shaderSrc/flipVShader.vert", "../shaderSrc/fShader.frag"};
+	shader norShader {"../shaderSrc/norVShader.vert", "../shaderSrc/fShader.frag"};
 	
 	while(!glfwWindowShouldClose(window))
 	{
@@ -151,8 +152,6 @@ glEnableVertexAttribArray(0);
 		glClearColor(1.0f, 1.0f, 0.4f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		float time = glfwGetTime();
-		ourShader.use();
-		ourShader.setFloat("angle", time);
 
 
 		glBindVertexArray(whVAO);
@@ -172,15 +171,46 @@ glEnableVertexAttribArray(0);
 
 		glDrawArrays(GL_LINES, 0, 6); // 3 lines × 2 verts each
 		glBindVertexArray(whVAO);
-		flipShader.use();
-		flipShader.setFloat("air", time);
-		glDrawElements(GL_TRIANGLES, 15, GL_UNSIGNED_INT, 0);
+
+//		glClearColor(1.0f, 1.0f, 0.4f, 1.0f);
+//		glClear(GL_COLOR_BUFFER_BIT);
+//
+		float turnLength = 1.0f;
+		float showFlip = std::fmod(time , turnLength * 4.0f );
+		if ( showFlip < turnLength)
+		{
+			ourShader.use();
+			ourShader.setFloat("angle", time);
+        		glBindVertexArray(whVAO);
+        		glDrawElements(GL_TRIANGLES, 15, GL_UNSIGNED_INT, 0);
+		}
+		else if (showFlip < turnLength * 2 )
+		{
+			norShader.use();
+        		norShader.setFloat("angle", time);
+        		glBindVertexArray(whVAO);
+        		glDrawElements(GL_TRIANGLES, 15, GL_UNSIGNED_INT, 0);
+		}
+		else if (showFlip < turnLength * 3)
+		{
+			flipShader.use();
+        		flipShader.setFloat("angle", time);
+        		glBindVertexArray(whVAO);
+        		glDrawElements(GL_TRIANGLES, 15, GL_UNSIGNED_INT, 0);
+		}
+		else  
+		{
+			norShader.use();
+        		norShader.setFloat("angle", time);
+        		glBindVertexArray(whVAO);
+        		glDrawElements(GL_TRIANGLES, 15, GL_UNSIGNED_INT, 0);
+		}
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
 
-}
+	}
 
 
 void updateView(GLFWwindow *window, int width, int height)
