@@ -141,6 +141,7 @@ glEnableVertexAttribArray(0);
 	shader ourShader2 { "../shaderSrc/poVShader.vert", "../shaderSrc/poFShader.frag"};
 
 	shader airShader {"../shaderSrc/airVShader.vert", "../shaderSrc/airFShader.frag"};
+	shader flipShader {"../shaderSrc/flipVShader.vert", "../shaderSrc/fShader.frag"};
 	
 	while(!glfwWindowShouldClose(window))
 	{
@@ -170,6 +171,9 @@ glEnableVertexAttribArray(0);
 
 
 		glDrawArrays(GL_LINES, 0, 6); // 3 lines × 2 verts each
+		glBindVertexArray(whVAO);
+		flipShader.use();
+		glDrawElements(GL_TRIANGLES, 15, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
