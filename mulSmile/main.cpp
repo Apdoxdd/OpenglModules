@@ -1,0 +1,36 @@
+#include "shader.hpp"
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <cmath>
+#include <iostream>
+
+
+void updateView(GLFWwindow *window, int width, int height);
+void processInput(GLFWwindow *window);
+
+int main()
+{
+	glfwInit();
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+	GLFWwindow *window = glfwCreateWindow(800, 600, "PIN WHEEL", NULL, NULL);
+	if(!window)
+	{
+		std::cout<<"failed to create a window"<<std::endl;
+		glfwTerminate();
+		return -1;
+	}
+	glfwMakeContextCurrent(window);
+	
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	{
+		std::cout<<"failed to initialize GLAD";
+		return -1;
+	}
+
+	glfwSetFramebufferSizeCallback(window, updateView);
+
+}
