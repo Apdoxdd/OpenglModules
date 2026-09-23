@@ -48,6 +48,10 @@ int main()
 	}
 	stbi_image_free(wallData);
 
+	int smWidth, smHeight, nrChannels2;
+	unsigned char *smData = stbi_load("../assets/aswesomeface.png", &smWidth, &smHeight, *nrChannels2, 0);
+
+
 
 
 
