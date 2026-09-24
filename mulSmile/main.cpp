@@ -35,6 +35,17 @@ int main()
 	glfwSetFramebufferSizeCallback(window, updateView);
 	stbi_set_flip_vertically_on_load(true);
 
+	unsigned int wallTex;
+	glGenTextures(1, &wallTex);
+	glBindTexture(GL_TEXTURE_2D, wallTex);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
+
 	int wallWidth, wallHeight, nrChannels;
 	unsigned char *wallData = stbi_load("../assests/container.jpg", &wallWidth, &wallHeight, &nrChannels, 0);
 	if (wallData)
