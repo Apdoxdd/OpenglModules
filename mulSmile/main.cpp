@@ -49,7 +49,17 @@ int main()
 	stbi_image_free(wallData);
 
 	int smWidth, smHeight, nrChannels2;
-	unsigned char *smData = stbi_load("../assets/aswesomeface.png", &smWidth, &smHeight, *nrChannels2, 0);
+	unsigned char *smData = stbi_load("../assets/aswesomeface.png", &smWidth, &smHeight, nrChannels2, 0);
+	if(smData)
+	{
+		glTextImage2D(GL_TEXTURE_2D, 0, Gl_RGB, smWidth, smHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, smData);
+		glGenerateMipMap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		std::cout<<"Failed to load smiley image"<<std::endl;
+	}
+	stbi_image_free(smData);
 
 
 
