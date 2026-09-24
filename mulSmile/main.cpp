@@ -59,6 +59,18 @@ int main()
 	}
 	stbi_image_free(wallData);
 
+	
+	unsigned int smTex;
+	glGenTextures(1, &smTex);
+	glBindTexture(GL_TEXTURE_2D, smTex);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
+
 	int smWidth, smHeight, nrChannels2;
 	unsigned char *smData = stbi_load("../assets/aswesomeface.png", &smWidth, &smHeight, &nrChannels2, 0);
 	if(smData)
