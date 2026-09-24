@@ -52,8 +52,8 @@ int main()
 	unsigned char *smData = stbi_load("../assets/aswesomeface.png", &smWidth, &smHeight, nrChannels2, 0);
 	if(smData)
 	{
-		glTextImage2D(GL_TEXTURE_2D, 0, Gl_RGB, smWidth, smHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, smData);
-		glGenerateMipMap(GL_TEXTURE_2D);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, smWidth, smHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, smData);
+		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
 	{
