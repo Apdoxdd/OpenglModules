@@ -17,7 +17,7 @@ int main()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow *window = glfwCreateWindow(800, 600, "PIN WHEEL", NULL, NULL);
+	GLFWwindow *window = glfwCreateWindow(800, 600, "SMILEY WALL", NULL, NULL);
 	if(!window)
 	{
 		std::cout<<"failed to create a window"<<std::endl;
