@@ -88,10 +88,10 @@ int main()
 
 	float wallVertices [] = {
 		
-     		0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   3.0f, 3.0f,   
-     		0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   3.0f, 0.0f,   
-    		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   
-    		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    
+     		0.6f,  0.6f, 0.0f,   1.0f, 0.0f, 0.0f,   3.0f, 3.0f,   
+     		0.6f, -0.6f, 0.0f,   0.0f, 1.0f, 0.0f,   3.0f, 0.0f,   
+    		-0.6f, -0.6f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   
+    		-0.6f,  0.6f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    
 	};
 
 	unsigned int wallIndeces[] = {
@@ -119,6 +119,7 @@ int main()
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
 
+	shader wallShader {"../shaderSrc/wallVShader.vert", "../shaderSrc/wallFShader.frag"};
 	
 
 	while(!glfwWindowShouldClose(window))
@@ -129,8 +130,17 @@ int main()
 		glClearColor(0.3f, 0.4f, 0.4f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		
+		wallShader.use();
+		wallShader.setInt("texture1", 0);
+		wallShader.setInt("texture2", 1);
 
-		
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, wallTex);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, smTex);
+
+		glBindVertexArray(wallVAO);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

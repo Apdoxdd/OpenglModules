@@ -3,7 +3,7 @@
 in vec3 ourColor;
 in vec2 texCoord;
 
-uniform smapler2D texture1;
+uniform sampler2D texture1;
 uniform sampler2D texture2;
 
 out vec4 fragColor;
