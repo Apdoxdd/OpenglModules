@@ -47,7 +47,7 @@ int main()
 
 
 	int wallWidth, wallHeight, nrChannels;
-	unsigned char *wallData = stbi_load("../assests/container.jpg", &wallWidth, &wallHeight, &nrChannels, 0);
+	unsigned char *wallData = stbi_load("../assets/wall.jpg", &wallWidth, &wallHeight, &nrChannels, 0);
 	if (wallData)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, wallWidth, wallHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, wallData);
@@ -72,7 +72,7 @@ int main()
 
 
 	int smWidth, smHeight, nrChannels2;
-	unsigned char *smData = stbi_load("../assets/aswesomeface.png", &smWidth, &smHeight, &nrChannels2, 0);
+	unsigned char *smData = stbi_load("../assets/awesomeface.png", &smWidth, &smHeight, &nrChannels2, 0);
 	if(smData)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, smWidth, smHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, smData);
