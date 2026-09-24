@@ -49,7 +49,7 @@ int main()
 	stbi_image_free(wallData);
 
 	int smWidth, smHeight, nrChannels2;
-	unsigned char *smData = stbi_load("../assets/aswesomeface.png", &smWidth, &smHeight, nrChannels2, 0);
+	unsigned char *smData = stbi_load("../assets/aswesomeface.png", &smWidth, &smHeight, &nrChannels2, 0);
 	if(smData)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, smWidth, smHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, smData);
