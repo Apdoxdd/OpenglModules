@@ -56,6 +56,33 @@ int main()
 	}
 	stbi_image_free(pooData);
 
+	float pooVertices [] {
+		-0.6f, -0.6f, 0.0f,     0.0f, 0.0f, // bottom left
+		-0.6f,  0.6f, 0.0f,     0.0f, 1.0f, // top left 
+		 0.6f,  0.6f, 0.0f,     1.0f, 1.0f, // top right	
+		 0.6f, -0.6f, 0.0f,     1.0f, 0.0f  // bottom right
+	};
+	unsigned int pooIndeces [] {
+		0, 1, 2,
+		2, 3, 0
+	};
+
+	unsigned int pooVAO, pooVBO, pooEBO;
+	glGenVertexArrays(1, &pooVAO);
+	glGenBuffers(1, &pooVBO);
+	glGenBuffers(1, &pooEBO);
+
+	glBindVertexArray(pooVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, pooVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pooEBO);
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(pooVertices), pooVertices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(pooIndeces), pooIndeces, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+
+
 	while(!glfwWindowShouldClose(window))
 	{
 		processInput(window);
