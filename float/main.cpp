@@ -48,7 +48,11 @@ int main()
 	unsigned char *pooData = stbi_load("../assets/poo.png", &pooWidth, &pooHeight, &pooChannels, 0);
 	if(pooData)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pooWidth, pooHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, pooData);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pooWidth, pooHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, pooData);
+		glGenerateMipmap(GL_TEXTURE_2D);
+		// incoming is needed to blend transparent images
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 	else
 	{
@@ -57,10 +61,10 @@ int main()
 	stbi_image_free(pooData);
 
 	float pooVertices [] {
-		-0.6f, -0.6f, 0.0f,     0.0f, 0.0f, // bottom left
-		-0.6f,  0.6f, 0.0f,     0.0f, 1.0f, // top left 
-		 0.6f,  0.6f, 0.0f,     1.0f, 1.0f, // top right	
-		 0.6f, -0.6f, 0.0f,     1.0f, 0.0f  // bottom right
+		-0.225f, -0.3f, 0.0f,     0.0f, 0.0f, // bottom left
+		-0.225f,  0.3f, 0.0f,     0.0f, 1.0f, // top left 
+		 0.225f,  0.3f, 0.0f,     1.0f, 1.0f, // top right	
+		 0.225f, -0.3f, 0.0f,     1.0f, 0.0f  // bottom right
 	};
 	unsigned int pooIndeces [] {
 		0, 1, 2,
@@ -82,6 +86,11 @@ int main()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	
+	shader pooShader {"../shaderSrc/pooVShader.vert", "../shaderSrc/pooFShader.frag"};
+
 
 	while(!glfwWindowShouldClose(window))
 	{
@@ -91,8 +100,18 @@ int main()
 		glClearColor(0.0f, 0.2314f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		pooShader.use();
+		pooShader.setInt("texture1", 0);
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, pooTex);
+		
+		glBindVertexArray(pooVAO);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+		
 	}
 	
 }
