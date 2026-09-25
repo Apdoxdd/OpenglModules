@@ -35,6 +35,27 @@ int main()
 	glfwSetFramebufferSizeCallback(window, updateView);
 	stbi_set_flip_vertically_on_load(true);
 
+	unsigned int pooTex;
+	glGenTextures(1, &pooTex);
+	glBindTexture(GL_TEXTURE_2D, pooTex);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	int pooWidth, pooHeight, pooChannels;
+	unsigned char *pooData = stbi_load("../assets/poo.png", &pooWidth, &pooHeight, &pooChannels, 0);
+	if(pooData)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pooWidth, pooHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, pooData);
+	}
+	else
+	{
+		std::cout<<"Failed to load poo pic\n";
+	}
+	stbi_image_free(pooData);
+
 	while(!glfwWindowShouldClose(window))
 	{
 		processInput(window);
