@@ -44,7 +44,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	int skyWidth, skyHeight, skyChannels;
-	unsigned char *skyData = stbi_load("../assets/sky.jpg", &skyWidth, &skyHeight, &skyChannels, 0);
+	unsigned char *skyData = stbi_load("../assets/sky.jpg", &skyWidth, &skyHeight, &skyChannels, 3);
 	if (skyData)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, skyWidth, skyHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, skyData);
@@ -65,27 +65,27 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	int moonWidth, moonHeight, moonChannels;
-	unsigned char *moonData = stbi_load("../assets/moon.png", &moonWidth, &moonHeight, &moonChannels, 0);
+	unsigned char *moonData = stbi_load("../assets/moon.png", &moonWidth, &moonHeight, &moonChannels, 4);
 
 	if (moonData)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, moonWidth, moonHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, moonData);
 		glGenerateMipmap(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+				//glEnable(GL_BLEND);
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 	stbi_image_free(moonData);
 
 	float skyVertices[] = {  		//no color
-		0.06f, 0.06f, 0.0f, 	3.0f, 3.0f,
-		0.06f, -0.06f, 0.0f, 	2.0f, 2.0f,
-		-0.06f, -0.06f, 0.0f, 	0.0f, 0.0f,
-		-0.06f, 0.06f, 0.0f,	0.0f, 3.0f	
+		1.0f, 1.0f, 0.0f, 	3.0f, 3.0f,
+		1.0f, -1.0f, 0.0f, 	1.0f, 3.0f,
+		-1.0f, -1.0f, 0.0f, 	0.0f, 0.0f,
+		-1.0f, 1.0f, 0.0f,	0.0f, 3.0f	
 	};
 	
 	unsigned int skyIndeces[] = {
 		2, 3, 0,
-		0, 1, 3
+		0, 1, 2
 	};
 
 	unsigned int skyVAO, skyVBO, skyEBO;
