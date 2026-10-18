@@ -101,6 +101,7 @@ int main()
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 
+	shader skyShader {"../shaderSrc/skyVShader.vert", "../shaderSrc/skyFShader.frag"};
 
 	while(!glfwWindowShouldClose(window))
 	{
@@ -109,10 +110,22 @@ int main()
 		glClearColor(0.510f, 0.510f, 0.510f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		skyShader.use();
+		skyShader.setInt("texture1", 0);
+		skyShader.setInt("texture2", 1);
 
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, skyTex);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, moonTex);
+
+		glBindVertexArray(skyVAO);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+
 
 
 }
