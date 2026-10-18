@@ -102,15 +102,7 @@ int main()
 	glEnableVertexAttribArray(1);
 
 
-
-
-
-
-
-
-
-
-	while(!glflwWindowShouldClose(window))
+	while(!glfwWindowShouldClose(window))
 	{
 		processInput(window);
 
