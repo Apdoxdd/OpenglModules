@@ -69,8 +69,10 @@ int main()
 
 	if (moonData)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, moonWidth, moonHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, moonData);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, moonWidth, moonHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, moonData);
 		glGenerateMipmap(GL_TEXTURE_2D);
+				glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 	stbi_image_free(moonData);
 
@@ -94,6 +96,9 @@ int main()
 	glBindVertexArray(skyVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, skyVBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, skyEBO);
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(skyVertices), skyVertices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(skyIndeces), skyIndeces, GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
