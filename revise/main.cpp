@@ -2,6 +2,7 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <pthread.h>
 #include <stb_image.h>
 #include <iostream>
 
@@ -22,6 +23,13 @@ int main()
 		glfwTerminate();
 		return -1;
 	}
+	glfwMakeContextCurrent(window);
+
+	if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	{
+		std::cout<<"failed to initialize GLAD"<<std::endl;
+		return -1;
+	}
 
 }
 
@@ -36,5 +44,4 @@ void processInput(GLFWwindow *window)
 	{
 		glfwSetWindowShouldClose(window, true);
 	}
-}
 }
