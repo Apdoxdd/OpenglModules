@@ -31,6 +31,23 @@ int main()
 		return -1;
 	}
 
+	glfwSetFramebufferSizeCallback(window, updateView);
+
+
+	while(true)
+	{
+		processInput(window);
+
+
+		glClearColor(0.510f, 0.510f, 0.510f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+
+		glfwSwapBuffers(window);
+		glfwPollEvents();
+	}
+
+
 }
 
 void updateView(GLFWwindow *window, int width, int height)
